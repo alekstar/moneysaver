@@ -1,4 +1,4 @@
-package ua.alekstar;
+package ua.alekstar.moneysaver;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
