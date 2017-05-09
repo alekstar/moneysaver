@@ -58,7 +58,7 @@ public class DatabaseConfiguration {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setDataSource(dataSource());
-        factory.setPackagesToScan("ua.alekstar.moneysaver.dao.model");
+        factory.setPackagesToScan("ua.alekstar.moneysaver.dao");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         factory.setJpaVendorAdapter(vendorAdapter);
@@ -69,8 +69,8 @@ public class DatabaseConfiguration {
 
     private Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL94Dialect");
         return properties;
     }
 
