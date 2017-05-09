@@ -1,23 +1,50 @@
 package ua.alekstar.moneysaver.rest;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.alekstar.moneysaver.rest.currency.Currencies;
 import ua.alekstar.moneysaver.rest.currency.Currency;
+import ua.alekstar.moneysaver.service.CurrencyService;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 @RestController("/json/currency")
 public class CurrencyJsonRestController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    private final CurrencyService currencyService;
+
+    public CurrencyJsonRestController(CurrencyService currencyService) {
+        this.currencyService = currencyService;
+    }
+
+    @GetMapping
     @ResponseBody
-    public Currencies get() {
-        final List<Currency> currencies = new ArrayList<>();
-        currencies.add(new Currency(1L, "USD", "US Dollar", '$'));
-        return new Currencies(currencies);
+    public Currencies get(@RequestParam(required = false) Long id) {
+        if (id == null) {
+            return readAll();
+        }
+        return read(id);
+    }
+
+    private Currencies read(Long id) {
+        return new Currencies(Collections.singletonList(currencyService.read(id)));
+    }
+
+    private Currencies readAll() {
+        return new Currencies(currencyService.readAll());
+    }
+
+    @PostMapping
+    public void post(@RequestBody Currency currency) {
+        currencyService.create(currency.toEntity());
+    }
+
+    @PutMapping
+    public void put(@RequestBody Currency currency) {
+        currencyService.update(currency.toEntity());
+    }
+
+    @DeleteMapping
+    public void delete(@RequestParam Long id) {
+        currencyService.delete(id);
     }
 }
