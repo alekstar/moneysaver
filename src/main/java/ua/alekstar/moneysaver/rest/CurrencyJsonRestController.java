@@ -7,7 +7,8 @@ import ua.alekstar.moneysaver.service.CurrencyService;
 
 import java.util.Collections;
 
-@RestController("/json/currency")
+@RestController
+@RequestMapping("/json/currency")
 public class CurrencyJsonRestController {
 
     private final CurrencyService currencyService;
