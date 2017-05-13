@@ -13,4 +13,6 @@ public interface CurrencyService {
     void update(Currency currency);
 
     void delete(Long id);
+
+    Currency readByIsoCode(String isoCode);
 }

@@ -41,4 +41,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     public void delete(Long id) {
         currencyRepository.delete(id);;
     }
+
+    @Override
+    public Currency readByIsoCode(String isoCode) {
+        return currencyRepository.readByIsoCode(isoCode);
+    }
 }
