@@ -13,6 +13,7 @@ public class Account {
     }
 
     public Account(Long id, String name, Currency currency) {
+        this();
         this.id = id;
         this.name = name;
         this.currency = currency.getIsoCode();

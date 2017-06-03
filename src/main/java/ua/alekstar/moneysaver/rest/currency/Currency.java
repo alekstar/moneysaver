@@ -10,6 +10,7 @@ public class Currency {
     private Currency() {}
 
     private Currency(Long id, String isoCode, String name, Character symbol) {
+        this();
         this.id = id;
         this.isoCode = isoCode;
         this.name = name;
