@@ -1,11 +1,11 @@
 package ua.alekstar.moneysaver.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.alekstar.moneysaver.dao.AccountRepository;
 import ua.alekstar.moneysaver.dao.entities.Account;
 
-@Component
+@Service
 @Transactional
 public class AccountServiceImpl implements AccountService {
 

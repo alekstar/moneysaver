@@ -1,11 +1,11 @@
 package ua.alekstar.moneysaver.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.alekstar.moneysaver.dao.TransactionRepository;
 import ua.alekstar.moneysaver.dao.entities.Transaction;
 
-@Component("transactionService")
+@Service
 @Transactional
 public class TransactionServiceImpl implements TransactionService {
 
