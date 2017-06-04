@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.alekstar.moneysaver.dao.entities.Currency;
 import ua.alekstar.moneysaver.rest.account.Account;
 import ua.alekstar.moneysaver.rest.account.Accounts;
+import ua.alekstar.moneysaver.rest.transaction.Transactions;
 import ua.alekstar.moneysaver.service.AccountService;
 import ua.alekstar.moneysaver.service.CurrencyService;
 
@@ -28,6 +29,12 @@ public class AccountJsonRestController {
             return readAll();
         }
         return read(id);
+    }
+
+    @GetMapping(path ="{accountId}/transactions")
+    @ResponseBody
+    public Transactions getTransactions(@PathVariable(name = "accountId") Long id) {
+        return new Transactions(accountService.readTransactions(id));
     }
 
     @PostMapping

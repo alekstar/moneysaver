@@ -1,6 +1,7 @@
 package ua.alekstar.moneysaver.service;
 
 import ua.alekstar.moneysaver.dao.entities.Account;
+import ua.alekstar.moneysaver.dao.entities.Transaction;
 
 public interface AccountService {
 
@@ -13,4 +14,6 @@ public interface AccountService {
     void update(Account currency);
 
     void delete(Long id);
+
+    Iterable<Transaction> readTransactions(Long accountId);
 }

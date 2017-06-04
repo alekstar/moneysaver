@@ -6,4 +6,6 @@ import ua.alekstar.moneysaver.dao.entities.Transaction;
 
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
+
+    Iterable<Transaction> findByAccountId(Long accountId);
 }
