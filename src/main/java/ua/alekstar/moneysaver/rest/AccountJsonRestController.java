@@ -30,22 +30,9 @@ public class AccountJsonRestController {
         return read(id);
     }
 
-    private Accounts read(Long id) {
-        return new Accounts(Collections.singletonList(accountService.read(id)));
-    }
-
-    private Accounts readAll() {
-        return new Accounts(accountService.readAll());
-    }
-
     @PostMapping
     public void post(@RequestBody Account account) {
         accountService.create(toEntity(account));
-    }
-
-    private ua.alekstar.moneysaver.dao.entities.Account toEntity(Account account) {
-        final Currency currency = currencyService.readByIsoCode(account.getCurrency());
-        return new ua.alekstar.moneysaver.dao.entities.Account(account.getId(), account.getName(), currency);
     }
 
     @PutMapping
@@ -56,6 +43,19 @@ public class AccountJsonRestController {
     @DeleteMapping
     public void delete(@RequestParam Long id) {
         accountService.delete(id);
+    }
+
+    private Accounts read(Long id) {
+        return new Accounts(Collections.singletonList(accountService.read(id)));
+    }
+
+    private Accounts readAll() {
+        return new Accounts(accountService.readAll());
+    }
+
+    private ua.alekstar.moneysaver.dao.entities.Account toEntity(Account account) {
+        final Currency currency = currencyService.readByIsoCode(account.getCurrency());
+        return new ua.alekstar.moneysaver.dao.entities.Account(account.getId(), account.getName(), currency);
     }
 
 }
