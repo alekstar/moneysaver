@@ -21,7 +21,15 @@ public class Transaction {
 
     private BigDecimal amount;
 
+    private Transaction() {};
+
     public Transaction(LocalDateTime time, Account account, BigDecimal amount) {
+        this(null, time, account, amount);
+    }
+
+    public Transaction(Long id, LocalDateTime time, Account account, BigDecimal amount) {
+        this();
+        this.id = id;
         this.time = time;
         this.account = account;
         this.amount = amount;
