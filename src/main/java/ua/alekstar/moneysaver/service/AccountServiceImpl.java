@@ -46,6 +46,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Iterable<Transaction> readTransactions(Long accountId) {
-        return transactionRepository.findByAccountId(accountId);
+        return transactionRepository.findByAccountIdOrderByTime(accountId);
     }
 }
