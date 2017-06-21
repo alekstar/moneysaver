@@ -5,6 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.alekstar.moneysaver.dao.TransactionRepository;
 import ua.alekstar.moneysaver.dao.entities.Transaction;
 
+import java.math.BigDecimal;
+
 @Service
 @Transactional
 public class TransactionServiceImpl implements TransactionService {
@@ -38,5 +40,10 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public void delete(Long id) {
         transactionRepository.delete(id);
+    }
+
+    @Override
+    public BigDecimal calculateAmountForAccount(Long accountId) {
+        return transactionRepository.calculateAmountForAccount(accountId);
     }
 }

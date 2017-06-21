@@ -2,11 +2,14 @@ package ua.alekstar.moneysaver.rest.account;
 
 import ua.alekstar.moneysaver.dao.entities.Currency;
 
+import java.math.BigDecimal;
+
 public class Account {
 
     private Long id;
     private String name;
     private String currency;
+    private BigDecimal amount;
 
     private Account() {
 
@@ -45,5 +48,13 @@ public class Account {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 }

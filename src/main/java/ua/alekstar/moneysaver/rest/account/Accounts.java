@@ -1,5 +1,6 @@
 package ua.alekstar.moneysaver.rest.account;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -12,6 +13,10 @@ public class Accounts {
         this.accounts = StreamSupport.stream(accounts.spliterator(), false)
                 .map(Account::new)
                 .collect(Collectors.toList());
+    }
+
+    public Accounts(List<Account> restAccounts) {
+        this.accounts = restAccounts;
     }
 
     public Iterable<Account> getAccounts() {

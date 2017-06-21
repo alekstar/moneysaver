@@ -7,8 +7,12 @@ import ua.alekstar.moneysaver.rest.account.Accounts;
 import ua.alekstar.moneysaver.rest.transaction.Transactions;
 import ua.alekstar.moneysaver.service.AccountService;
 import ua.alekstar.moneysaver.service.CurrencyService;
+import ua.alekstar.moneysaver.service.TransactionService;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/json/account")
@@ -16,10 +20,13 @@ public class AccountJsonRestController {
 
     private final AccountService accountService;
     private final CurrencyService currencyService;
+    private final TransactionService transactionService;
 
-    public AccountJsonRestController(AccountService accountService, CurrencyService currencyService) {
+    public AccountJsonRestController(AccountService accountService, CurrencyService currencyService,
+                                     TransactionService transactionService) {
         this.accountService = accountService;
         this.currencyService = currencyService;
+        this.transactionService = transactionService;
     }
 
     @GetMapping
@@ -53,11 +60,19 @@ public class AccountJsonRestController {
     }
 
     private Accounts read(Long id) {
-        return new Accounts(Collections.singletonList(accountService.read(id)));
+        final ua.alekstar.moneysaver.dao.entities.Account account = accountService.read(id);
+        final Account restAccount = new Account(account);
+        restAccount.setAmount(transactionService.calculateAmountForAccount(account.getId()));
+        return new Accounts(Collections.singletonList(restAccount));
     }
 
     private Accounts readAll() {
-        return new Accounts(accountService.readAll());
+        final Iterable<ua.alekstar.moneysaver.dao.entities.Account> accounts = accountService.readAll();
+        final List<Account> restAccounts = StreamSupport.stream(accounts.spliterator(), false)
+                .map(Account::new)
+                .collect(Collectors.toList());
+        restAccounts.forEach(a -> a.setAmount(transactionService.calculateAmountForAccount(a.getId())));
+        return new Accounts(restAccounts);
     }
 
     private ua.alekstar.moneysaver.dao.entities.Account toEntity(Account account) {
