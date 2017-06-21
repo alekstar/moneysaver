@@ -69,6 +69,25 @@ public class TransactionRepositoryTest {
         assertThat(readTransaction.getAmount(), is(amount));
     }
 
+
+
+    @Test
+    public void shouldReturnTotalAmountForAccount() {
+        final Currency USD = new Currency("USD", "US Dollars", '$');
+        final Account account = new Account("Account with USD", USD);
+        addTransactionWithAmount(account, "10.45");
+        addTransactionWithAmount(account, "10.45");
+        final BigDecimal totalAmount = transactionRepository.calculateAmountForAccount(account.getId());
+        assertThat(totalAmount, is(new BigDecimal("20.90")));
+    }
+
+    private void addTransactionWithAmount(Account account, String amountInString) {
+        final LocalDateTime time = LocalDateTime.now();
+        final BigDecimal amount = new BigDecimal(amountInString);
+        final Transaction transaction = new Transaction(time, account, amount);
+        transactionRepository.save(transaction);
+    }
+
     private Transaction findOne(Long id) {
         return transactionRepository.findOne(id);
     }
