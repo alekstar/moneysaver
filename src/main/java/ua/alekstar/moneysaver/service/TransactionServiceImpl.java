@@ -44,6 +44,10 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public BigDecimal calculateAmountForAccount(Long accountId) {
-        return transactionRepository.calculateAmountForAccount(accountId);
+        final BigDecimal amount = transactionRepository.calculateAmountForAccount(accountId);
+        if (amount == null) {
+            return BigDecimal.ZERO;
+        }
+        return amount;
     }
 }
