@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.alekstar.moneysaver.dao.entities.Account;
 import ua.alekstar.moneysaver.dao.entities.Currency;
@@ -79,6 +80,11 @@ public class TransactionRepositoryTest {
         addTransactionWithAmount(account, "10.45");
         final BigDecimal totalAmount = transactionRepository.calculateAmountForAccount(account.getId());
         assertThat(totalAmount, is(new BigDecimal("20.90")));
+    }
+
+    @Test(expected = DataIntegrityViolationException.class)
+    public void shouldThrowExceptionIfAccountIsNull() {
+        addTransactionWithAmount(null, "123");
     }
 
     private void addTransactionWithAmount(Account account, String amountInString) {

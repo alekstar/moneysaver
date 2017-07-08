@@ -54,8 +54,9 @@ public class TransactionJsonRestController {
     }
 
     private ua.alekstar.moneysaver.dao.entities.Transaction toEntity(Transaction transaction) {
-        final Account account = accountService.read(transaction.getAccountId());
+        final Account account = accountService.readWithCheck(transaction.getAccountId());
         return new ua.alekstar.moneysaver.dao.entities.Transaction(transaction.getId(), transaction.getTime(), account,
                 transaction.getAmount());
     }
+
 }

@@ -7,6 +7,8 @@ import ua.alekstar.moneysaver.dao.TransactionRepository;
 import ua.alekstar.moneysaver.dao.entities.Account;
 import ua.alekstar.moneysaver.dao.entities.Transaction;
 
+import javax.annotation.Nonnull;
+
 @Service
 @Transactional
 public class AccountServiceImpl implements AccountService {
@@ -47,5 +49,18 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Iterable<Transaction> readTransactions(Long accountId) {
         return transactionRepository.findByAccountIdOrderByTime(accountId);
+    }
+
+    @Override
+    @Nonnull
+    public Account readWithCheck(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("accountId should be specified");
+        }
+        final Account account = read(id);
+        if (account == null) {
+            throw new IllegalArgumentException("There is no account with ID " + id);
+        }
+        return account;
     }
 }

@@ -13,7 +13,7 @@ public class Transaction {
 
     private LocalDateTime time;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.ALL}, optional = false)
     private Account account;
 
     private BigDecimal amount;
