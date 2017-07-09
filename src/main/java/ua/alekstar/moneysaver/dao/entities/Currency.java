@@ -19,11 +19,6 @@ public class Currency  implements Serializable {
 
     private Currency() {}
 
-    public Currency(Long id, String isoCode, String name, Character symbol) {
-        this(isoCode, name, symbol);
-        this.id = id;
-    }
-
     public Currency(String isoCode, String name, Character symbol) {
         this.isoCode = isoCode;
         this.name = name;
@@ -64,5 +59,39 @@ public class Currency  implements Serializable {
 
     public static Currency currencyForCreate(Currency currency) {
         return new Currency(currency.getIsoCode(), currency.getName(), currency.getSymbol());
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private final Currency currency;
+
+        private Builder() {
+            currency = new Currency();
+        }
+
+        public Builder withId(Long id) {
+            currency.setId(id);
+            return this;
+        }
+        public Builder withIsoCode(String isoCode) {
+            currency.setIsoCode(isoCode);
+            return this;
+        }
+        public Builder withName(String name) {
+            currency.setName(name);
+            return this;
+        }
+        public Builder withSymbol(Character symbol) {
+            currency.setSymbol(symbol);
+            return this;
+        }
+
+        public Currency build() {
+            return this.currency;
+        }
     }
 }
